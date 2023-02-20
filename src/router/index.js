@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/editor',
+    path: '/',
     name: 'editor',
     component: resolve => require(['../views/MonacoEditorView.vue'], resolve)
   },
