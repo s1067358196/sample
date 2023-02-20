@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import MonacoEditorView from '../views/MonacoEditorView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/editor',
+    name: 'editor',
+    component: resolve => require(['../views/MonacoEditorView.vue'], resolve)
   },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: HomeView
+  // },
   {
     path: '/about',
     name: 'about',
@@ -21,7 +27,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  mode: 'history',
+  routes: routes
 })
 
 export default router
