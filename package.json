@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist -r https://github.com/s1067358196/sample.git -b gh-pages"
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
