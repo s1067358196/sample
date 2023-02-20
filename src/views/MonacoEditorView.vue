@@ -1,5 +1,8 @@
 <template>
-  <div ref="editor" class="monaco-editor"></div>
+  <div>
+    Test
+    <div ref="editor" class="monaco-editor"></div>
+  </div>
 </template>
 
 <script>
