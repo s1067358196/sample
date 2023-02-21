@@ -1,5 +1,12 @@
 <template>
-  <a-table :data-source="data" :columns="columns" id="dragTable" class="drag-table">
+<div>
+  <a-table
+    :data-source="data"
+    :columns="columns"
+    id="dragTable"
+    class="drag-table"
+  >
+
     <span slot="Sorter">
       <a-icon type="menu" class="drag" style="cursor: grab" />
     </span>
@@ -47,27 +54,8 @@
       type="search"
       :style="{ color: filtered ? '#108ee9' : undefined }"
     />
-    <template slot="customRender" slot-scope="text, record, index, column">
-      <span v-if="searchText && searchedColumn === column.dataIndex">
-        <template
-          v-for="(fragment, i) in text
-            .toString()
-            .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
-        >
-          <mark
-            v-if="fragment.toLowerCase() === searchText.toLowerCase()"
-            :key="i"
-            class="highlight"
-            >{{ fragment }}</mark
-          >
-          <template v-else>{{ fragment }}</template>
-        </template>
-      </span>
-      <template v-else>
-        {{ text }}
-      </template>
-    </template>
   </a-table>
+    </div>
 </template>
 
 <script>
@@ -177,34 +165,36 @@ export default {
       ],
     };
   },
-  updated() {
-    var dragTable = document.getElementById('dragTable');
-    let _this = this;
-    if(dragTable) {
-        var el = dragTable.querySelector('.ant-table.tbody');
-        Sortable.create(el, {
-            ghostClass: 'blue-background-class',
-            animation: 150,
-            handle: ".drag",
-            onUpdate: function (evt) {
-                const res1 = _this.data.splice(evt.oldIndex,1)[0];
-                _this.data.splice(evt.newIndex,0,res1);
-                
-            }
-            })
-    }
-  },
   methods: {
     handleSearch(selectedKeys, confirm, dataIndex) {
       confirm();
       this.searchText = selectedKeys[0];
       this.searchedColumn = dataIndex;
     },
-
     handleReset(clearFilters) {
       clearFilters();
       this.searchText = "";
     },
+    sortable() {
+      var dragTable = document.getElementById("dragTable");
+      let _this = this;
+      if (dragTable) {
+        var el = dragTable.querySelector(".ant-table-tbody");
+        Sortable.create(el, {
+        ghostClass: "blue-background-class",
+        animation: 150,
+        handle: ".drag",
+        onUpdate: function (evt) {
+          const res1 = _this.data.splice(evt.oldIndex, 1)[0];
+          _this.data.splice(evt.newIndex, 0, res1);
+        },
+      });
+      
+      }
+    }
+  },
+  mounted() {
+    this.sortable()
   },
 };
 </script>
@@ -213,7 +203,8 @@ export default {
   background-color: rgb(255, 192, 105);
   padding: 0px;
 }
-.drag-table /deep/ .blue-background-class, .sortable-chosen {
-    background: red
+.drag-table /deep/ .blue-background-class,
+.sortable-chosen {
+  background: red;
 }
 </style>
