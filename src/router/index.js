@@ -1,15 +1,25 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import MonacoEditorView from '../views/MonacoEditorView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'editor',
-    component: resolve => require(['../views/MonacoEditorView.vue'], resolve)
+    name: '',
+    component: resolve => require(['../views/LayoutView.vue'], resolve),
+    children: [
+      {
+        path: 'editor',
+        name: 'editor',
+        component: resolve => require(['../views/MonacoEditorView.vue'], resolve),
+      },
+      {
+        path: 'table',
+        name: 'table',
+        component: resolve => require(['../views/EditableTable.vue'], resolve),
+      }
+    ]
   },
   // {
   //   path: '/',
@@ -27,7 +37,6 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
   routes: routes
 })
 
